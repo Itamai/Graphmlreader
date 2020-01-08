@@ -39,25 +39,25 @@ public class GraphProperties {
         }
     }
 
-    public boolean bfsPaths(int b) {
+    public boolean bfsPaths(int g) {
         boolean visited[] = new boolean[this.numberOfVertices];
         boolean connected = false;
         LinkedList<Integer> queue = new LinkedList<Integer>();
         int counter = 0;
 
-        visited[b] = true;
-        queue.add(b);
+        visited[g] = true;
+        queue.add(g);
 
         while (queue.size() != 0) {
             // Dequeue a vertex from queue and print it
-            b = queue.poll();
+            g = queue.poll();
 
             // System.out.print(s + " ");
             counter++;
             // Get all adjacent vertices of the dequeued vertex s
             // If a adjacent has not been visited, then mark it
             // visited and enqueue it
-            Iterator<Integer> i = adjacencyList[b].listIterator();
+            Iterator<Integer> i = adjacencyList[g].listIterator();
             while (i.hasNext()) {
                 int n = i.next();
                 if (!visited[n]) {
