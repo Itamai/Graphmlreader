@@ -4,19 +4,24 @@ import javax.xml.parsers.*;
 import org.xml.sax.SAXException;
 import java.io.*;
 
-
+// C:\Users\Torben\Desktop\java-project\small_graph.graphml
+// C:\Users\Torben\Desktop\java-project\small_graph_v2.graphml
+// C:\Users\Torben\Desktop\java-project\small_graph_v3.graphml
+// C:\Users\Torben\Desktop\java-project\small_graph_v4.graphml
+// C:\Users\Torben\Desktop\java-project\large_graph.graphml
 
 public class Main
 {
-    public static void main(String argv[]) throws SAXException, ParserConfigurationException, IOException {
+    public static void main(String[] argv) throws IOException, SAXException, ParserConfigurationException {
 
         Graph graphml = new Graph();
-        graphml.readFile("C:\\Users\\ati\\Documents\\small_graph.graphml");
-        GraphProperties test = new GraphProperties(graphml);
-        test.showStatus();
-        /*graphml.printAllNodes();
-        graphml.printAllEdges();*/
-        test.shortestPath(Integer.parseInt(String.valueOf(1)),Integer.parseInt(String.valueOf(14)));
-
+        if(graphml.readFile(argv[0])){
+            GraphProperties test = new GraphProperties(graphml);
+            //test.showStatus();
+            /*graphml.printAllNodes();
+            graphml.printAllEdges();*/
+            test.shortestPathDijkstra(Integer.parseInt(argv[1]),Integer.parseInt(argv[2]));
+            test.calculateBetweennessCentrality();
+        }
     }
-}        
+}
