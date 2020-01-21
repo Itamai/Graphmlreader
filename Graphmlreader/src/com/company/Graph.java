@@ -15,13 +15,20 @@ public class Graph {
     private NodeList edgesTagList;
     private NodeList nodesTagList;
 
-    private HashMap<Integer, Node> nodeHashMap = new HashMap<Integer, Node>();
-    private HashMap<Integer, Edge> edgeHashMap = new HashMap<Integer, Edge>();
+    private HashMap<Integer, Node> nodeHashMap = new HashMap<>();
+    private HashMap<Integer, Edge> edgeHashMap = new HashMap<>();
 
-    public Document doc=null;
+    public Document doc = null;
 
+    /**
+     * Gets the path of the file to read where the graph is in
+     * @param str - the path of the file to read
+     * @return returns true when the given file exists, false if not
+     * @throws ParserConfigurationException
+     * @throws IOException
+     * @throws SAXException
+     */
     public boolean readFile(String str) throws ParserConfigurationException, IOException, SAXException {
-//Creates a object pointing to the file
         File file = new File(str);
 //        check if file exists and if its not a directory
         if(file.exists() && !file.isDirectory()) {
@@ -35,29 +42,13 @@ public class Graph {
             saveEdgesFromFile();
             return true;
         }
-        System.out.println("No or Wrong File provided");
+        System.out.println("No or wrong file provided.");
         return false;
     }
 
-    public void printAllNodes(){
-    //prints all nodes on the console
-        for (Node value : nodeHashMap.values()) {
-            System.out.println("\tVertex " + value.getId() + ": 'v" + value.getId() + "'");
-        }
-    }
-
-    public void printAllEdges(){
-    //prints all edges on the console
-        for (Edge value : edgeHashMap.values()) {
-            System.out.println(
-                "\tEdge " + value.getEdgeId() + ": 'e" + value.getEdgeId()
-                + "':\t " + value.getSourceNode().getId()
-                + " to " + value.getTargetNode().getId()
-                + " \twith weight " + value.getEdgeWeight()
-            );
-        }
-    }
-
+    /**
+     * Stores all nodes from the nodeTagList of type w3c.dom.NodeList to a HashMap<Integer, Node> nodeHashMap
+     */
     private void saveNodesFromFile(){
         for(int n = 0; n < nodesTagList.getLength(); n++){
             int t = Integer.parseInt(nodesTagList.item(n).getChildNodes().item(1).getTextContent());
@@ -65,6 +56,9 @@ public class Graph {
         }
     }
 
+    /**
+     * Stores all nodes from the edgeTagList of type w3c.dom.NodeList to a HashMap<Integer, Edge> edgeHashMap
+     */
     private void saveEdgesFromFile(){
         for(int n = 0; n < edgesTagList.getLength(); n++){
             int sourceNodeID = Integer.parseInt(edgesTagList.item(n).getAttributes().getNamedItem("source").getNodeValue().substring(1));
@@ -76,18 +70,59 @@ public class Graph {
         }
     }
 
+    /**
+     * Prints all nodes that are in the nodeHashMap
+     */
+    public void printAllNodes(){
+        for (Node value : nodeHashMap.values()) {
+            System.out.println("\tVertex " + value.getId() + ": 'v" + value.getId() + "'");
+        }
+    }
+
+    /**
+     * Prints all edges that are in the edgeHashMap
+     */
+    public void printAllEdges(){
+        //prints all edges on the console
+        for (Edge value : edgeHashMap.values()) {
+            System.out.println(
+                    "\tEdge " + value.getEdgeId() + ": 'e" + value.getEdgeId()
+                            + "':\t " + value.getSourceNode().getId()
+                            + " to " + value.getTargetNode().getId()
+                            + " \twith weight " + value.getEdgeWeight()
+            );
+        }
+    }
+
+
+    /**
+     * Getter for the nodeHashMap
+     * @return - nodeHashMap
+     */
     public HashMap<Integer, Node> getNodeHashMap(){
         return nodeHashMap;
     }
 
+    /**
+     * Getter for the edgeHashMap
+     * @return - edgeHashMap
+     */
     public HashMap<Integer, Edge> getEdgeHashMap(){
         return edgeHashMap;
     }
 
+    /**
+     * Getter for the amount of nodes in the nodeHashMap
+     * @return - amount of nodes in the nodeHashMap
+     */
     public int getAmountOfNodes() {
         return nodeHashMap.size();
     }
 
+    /**
+     * Getter for the amount of edges in the edgeHashMap
+     * @return - amount of edges in the edgeHashMap
+     */
     public int getAmountOfEdges() {
         return edgeHashMap.size();
     }
